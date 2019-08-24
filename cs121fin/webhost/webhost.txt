@@ -1,0 +1,55 @@
+You can put your answers for Problem 1.2 in this file.
+
+ * You can write explanatory text as plain-text without any kind of comment
+   markup.
+
+ * Keep all lines to 80 characters or less!
+
+ * When writing relation schemas, you can indicate primary-key attributes
+   by enclosing them with asterisks, e.g. R1(*A*, B, C), R2(*C*, D)
+
+ * Don't forget that primary key attributes should always come first
+   when writing relation schemas
+
+-------------------------------------------------------------------------------
+customer_acct(*username*, email, url, account_open, sub_price, account_type)
+url is a candidate key for customer_acct
+NOT NULL constraint on url
+
+basic_customer(*username*, hostname, account_type)
+username is a foreign key to customer.username
+hostname is a foreign key to shared_server.hostname
+account_type is a foreign key to customer.account_type
+NOT NULL constraint on hostname and account_type
+
+preferred_customer(*username*, hostname, account_type)
+username is a foreign key to customer.username
+hostname is a foreign key to dedicated_server.hostname
+account_type is a foreign key to customer.account_type
+hostname is a candidate key for preferred_customer
+NOT NULL constraint on hostname and account_type
+
+servers(*hostname*, os_type, max_sites)
+
+shared_server(*hostname*, max_sites)
+hostname is a foreign key to server.hostname
+max_sites is a foreign key to server.max_sites
+NOT NULL constraint on max_sites
+
+dedicated_server(*hostname*, max_sites)
+hostname is a foreign key to server.hostname
+max_sites is a foreign key to server.max_sites
+NOT NULL constraint on max_sites
+
+software(*package_name*, *package_version*, package_desc, package_price)
+
+customer_software(*username*, *package_name*, *package_version*)
+username is a foreign key to customer.username
+package_name is a foreign key to software.package_name
+package_version is a foreign key to software.package_version
+
+server_software(*hostname*, *package_name*, *package_version*)
+hostname is a foreign key to server.hostname
+package_name is a foreign key to software.package_name
+package_version is a foreign key to software.package_version
+

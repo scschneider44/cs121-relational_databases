@@ -1,0 +1,62 @@
+Write the relational model schema for your airline database in this file, using
+the notation we have used all term.  You can indicate primary key columns by
+enclosing the attribute names in _ characters.  Include descriptions of other
+candidate keys or foreign keys (if any) immediately under each relation schema.
+Example:
+
+foo(_a_, b, c)
+ * b is also a candidate key
+ * c is a foreign key to bar.c
+------------------------------------------------------------------------------
+
+-- [Problem 4]
+
+flight(_flight_number_, _flight_date_, time, source, destination, international, type_code)
+* type_code is a foreign key to type_code to airplane.type_code 
+* NOT NULL constraint on flight.type_code
+
+airplane(company, model, _type_code_)
+
+seat(_type_code_, _seat_number_, seat_class, seat_type, exit_row)
+* type_code is a foreign key to type_code to airplane.type_code 
+
+customer(customer_id, first_name, last_name, email)
+
+customer_phone(_customer_id_, _phone_number_)
+* customer_id is a foreign key to customer.customer_id
+
+purchaser(_customer_id_, cc_number, exp_date, verification_code)
+* customer_id is a foreign key to customer.customer_id
+
+traveler(_customer_id_, passport_number, country, emergency_contact, ec_phone_number)
+* customer_id is a foreign key to customer.customer_id
+
+purchase(_purchase_id_, purchase_time, confirmation_number, customer_id)
+* customer_id is a foregin key to purchaser.customer_id
+* NOT NULL constraint on purchase.customer_id
+* confirmation_number is a candidate key for purchase
+* I moved customer_id here rather than make a relationship schema because it is a many to one 
+* total participation relationship to purchaser so you can just combine them
+
+ticket(_ticket_id_, sale_price, flight_number, flight_date, type_code, seat_number, purchase_id, customer_id, first_name, last_name)
+* flight_number is a foreign key to flight.flight_number
+* flight_date is a foreign key to flight.flight_date
+* type_code is a foreign key to seat.type_code
+* seat_number is a foreign key to seat.seat_number
+* purchase_id is a foregin key to purchase.purchase_id
+* customer_id is a foregin key to traveler.customer_id
+* first_name is a foregin key to traveler.customer_id
+* last_name is a foregin key to traveler.customer_id
+* NOT NULL constraint on ticket.flight_number
+* NOT NULL constraint on ticket.flight_date
+* NOT NULL constraint on ticket.type_code
+* NOT NULL constraint on ticket.seat_number
+* NOT NULL constriant on ticket.purchase_id
+* NOT NULL constraint on ticket.customer_id
+* NOT NULL constraint on ticket.first_name
+* NOT NULL constraint on ticket.last_name
+* (flight_number, flight_date, seat_number) is a candidate key
+* I combined all of the ticket relations into ticket becasue the relationships are many to one with total particiapation so you can
+* just combine the schemas.
+
+

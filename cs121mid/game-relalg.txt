@@ -1,0 +1,62 @@
+-- [Problem 1]
+
+PI[person_id, person_name]((geezer BOWTIE game_score BOWTIE game) DIVIDE (PI[type_id](game_type)));
+
+
+
+
+-- [Problem 2]
+
+[type_id, type_name]GROUP[count-distinct(person_id) AS num_played](game_type LBOWTIE (game BOWTIE game_score));
+
+
+
+
+-- [Problem 3]
+
+game_score <- game_score MINUS PI[game_id, person_id, score](SIGMA[type_name = "pinochle"](game_type BOWTIE game BOWTIE game_score));
+
+game <- game MINUS PI[game_id, type_id, game_date](SIGMA[type_name = "pinochle"](game_type BOWTIE game));
+
+game_type <- SIGMA[game_type != "pinochle"](game_type);
+
+
+
+-- [Problem 4]
+
+ted_game_scores <- PI[game_id, person_id, score](SIGMA[person_name = "Ted Codd"](geezer BOWTIE game_score));
+
+no_ted_game_scores <- game_score MINUS ted_game_scores;
+
+ted_raised_scores <- PI[game_id, person_id, score + 30](ted_games_scores);
+
+game_score <- ted_raised_scores UNION no_ted_game_scores;
+
+
+
+-- [Problem 5]
+
+new_game <- PI[game_id + 1, type_id, date](GROUP[max(game_id) AS game_id](game) CROSS PI[type_id](SIGMA[type_name = "dominoes"](game_type)) CROSS {("2000-04-12 15:30:00")});
+
+game <- game UNION new_game;
+
+game_score <- game_score UNION PI[game_id](new_game) CROSS {(987)} CROSS {(332)} UNION PI[game_id](new_game) CROSS {(227)} CROSS {(457)};
+
+
+
+
+-- [Problem 6]
+
+players_per_game <- [game_id, type_id]GROUP[count-distinct(person_id) as num_players](game_score LBOWTIE game);
+
+PI[game_id](SIGMA[num_players > max_players](players_per_game BOWTIE game_type) UNION SIGMA[num_players < min_players](players_per_game BOWTIE game_type));
+
+
+
+-- [Problem 7]
+
+games_played <- [person_id, person_name, type_id, type_name]GROUP[count-distinct(game_id) as num_times](game BOWTIE game_score BOWTIE geezer BOWTIE game_type);
+
+max_times <- [type_id]GROUP[max(num_times) as num_times](games_played);
+
+games_played BOWTIE max_times;

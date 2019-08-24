@@ -1,0 +1,51 @@
+You can put your answers for Problem 4 in this file.  Follow this notation for
+writing your answers in text format:
+
+ * You can write functional dependencies as A -> B
+
+ * You can write a set of functional dependencies as { A -> BC, C -> D }
+
+ * You can write attribute-set closure as {A}+ etc.
+
+ * You can write multivalued dependencies as A ->> B
+
+ * You can write explanatory text as plain-text without any kind of comment
+   markup.
+
+ * Keep all lines to 80 characters or less!
+
+ * When writing relation schemas, you can indicate primary-key attributes
+   by enclosing them with asterisks, e.g. R1(*A*, B, C), R2(*C*, D)
+
+ * Don't forget that primary key attributes should always come first
+   when writing relation schemas
+
+-- [Problem 4a]
+order = {*order_id*, cust_id, order_time}
+cust_id is a foreign key to customer.cust_id
+This schema is obviously in	4NF	because	it is also in BCNF: All	functional 
+dependencies that hold on this table have order_id on the LHS, and order_id 
+is the primary key of this relation	schema.
+
+customer = {*cust_id*, cust_address, cust_phone}
+This schema is obviously in	4NF	because	it is also in BCNF: All	functional 
+dependencies that hold on this table have cust_id on the LHS, and cust_id 
+is the primary key of this relation schema.
+
+pizza = {*pizza_id*, order_id, pizza_size}
+order_id is a foreign key to order.order_id
+This schema is clearly in 4NF because pizza_id is a superkey of R
+
+pizza_topping = {*pizza_id*, *topping*}
+pizza_id is a foreign key to pizza.pizza_id
+This schema is in 4NF because pizza_id ->> topping is a trivial multivalued 
+dependency.
+
+
+-- [Problem 4b]
+It's not possible to make a schema that is in BCNF and not 4NF because to
+be in BCNF and not 4NF would require a non trivial multivalued dependency
+where the LHS is not a super key of the relation. In this case the LHS
+of the only nontrivial multivalued dependency is super key.
+
+

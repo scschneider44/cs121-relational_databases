@@ -1,0 +1,49 @@
+You can put your answers for Problem 3 in this file.  Follow this notation for
+writing your answers in text format:
+
+ * You can write functional dependencies as A -> B
+
+ * You can write a set of functional dependencies as { A -> BC, C -> D }
+
+ * You can write attribute-set closure as {A}+ etc.
+
+ * You can write multivalued dependencies as A ->> B
+
+ * You can write explanatory text as plain-text without any kind of comment
+   markup.
+
+ * Keep all lines to 80 characters or less!
+
+ * When writing relation schemas, you can indicate primary-key attributes
+   by enclosing them with asterisks, e.g. R1(*A*, B, C), R2(*C*, D)
+
+ * Don't forget that primary key attributes should always come first
+   when writing relation schemas
+
+-- [Problem 3a]
+AI is a candidate key. We will first show it is a superkey and then show is
+is a minimal superkey. 
+We will go through {AI}+ incrementally. We clearly have {AI}+ = AI. From 
+A -> B and A -> G we have {AI}+ = ABGI. From BI -> C and AG -> H we have
+{AI}+ = ABCGHI. Thus, AI us a candidate key. To show AI is a minimal superkey 
+we will show {A}+ or {I}+ don't contain all of R. {A}+ = ABGH because 
+A -> G, A -> B, and AG -> H. {I}+ -> I. So, AI is a minimal superkey. Thus,
+AI is a candidate key.
+
+
+-- [Problem 3b]
+F = {A -> B, BI -> C, AG -> H, G -> BH, A -> G}
+First we union A -> B and A -> G to get 
+F = {A -> BG, BI -> C, AG -> H, G -> BH}
+A is extraneous in AG -> H because G -> BH implies G -> H by decomposition.
+Thus, we have
+Fc = {A -> BG, BI -> C, G -> BH} when we union G -> H and G -> BH.
+
+
+-- [Problem 3c]
+R1 = (*A*, B, G)
+R2 = (*B*, *I*, C)
+R3 = (*G*, B, H)
+R4 = (*A*, *I*)
+
+
